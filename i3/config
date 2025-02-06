@@ -69,25 +69,27 @@ bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
 
-bindsym $mod+s sticky toggle
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+s sticky toggle
 bindsym $mod+f fullscreen toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+space floating toggle
 
 # list open windows
 bindsym $mod+w exec --no-startup-id rofi -show window
 
-# change layout (stacked, tabbed, toggle split)
-bindsym $mod+i layout tabbed
-bindsym $mod+Shift+i layout stacked
-bindsym $mod+u layout toggle split
+# orientation
+bindsym $mod+o layout toggle split
+bindsym $mod+Ctrl+o layout stacked
+bindsym $mod+Shift+o layout tabbed
+
+# new window position
 bindsym $mod+Shift+n split v
 bindsym $mod+n split h
 
-bindsym $mod+a focus parent
-bindsym $mod+o focus child
+bindsym $mod+p focus parent
+bindsym $mod+Shift+p focus child
 
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
@@ -197,7 +199,9 @@ bindsym $mod+r mode "resize"
 
 # dark grey - #36454F
 # green     - #206030
-set $accent #1f282e
+# solarized grey - #282828
+
+set $accent #282828
 set $black  #000000FF
 set $white  #ffffff
 set $gray   #808080
