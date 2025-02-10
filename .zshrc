@@ -18,18 +18,7 @@ PATH="$PATH:/usr/local/go/bin:/home/tofs/go/bin:$GOPATH/bin"
 
 export EDITOR='nvim'
 
-update-all () {
-    sudo apt update && sudo apt upgrade;
-    sudo snap refresh;
-    brew update && brew upgrade;
-}
-
-alias python="python3"
-alias tma="tmux attach"
-alias nv="nvim"
-alias vim="nvim"
-alias matlab="/usr/local/MATLAB/R2024b/bin/matlab -softwareopengl"
-alias arduino2="/home/tofs/.local/bin/arduino2.3.3/arduino-ide"
+source ~/.dotfiles/.zshprivate
 
 # - Makes zsh start very very slow
 # export NVM_DIR="$HOME/.nvm"
