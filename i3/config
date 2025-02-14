@@ -12,12 +12,14 @@ set $refresh_i3status killall -SIGUSR1 i3status
 
 font pango:monospace 9
 focus_follows_mouse no
-hide_edge_borders smart
+hide_edge_borders smart_no_gaps
 floating_modifier $mod
 tiling_drag modifier titlebar
+workspace_layout stacking
+floating_minimum_size 700 x 300
 
-for_window [class="Caja"] floating enable
-for_window [class="Caja"] resize set 1200 700
+# for_window [class="Caja"] floating enable
+# for_window [class="Caja"] resize set 1200 700
 
 for_window [class="org.gnome.Nautilus"] floating enable
 for_window [class="org.gnome.Nautilus"] resize set 1000 700
@@ -126,6 +128,8 @@ bindcode 233 exec --no-startup-id brightnessctl set +10%
 # Make sure brightness is above the lowest, because u can set it to zero for some reason lol
 bindcode 232 exec --no-startup-id [ $(brightnessctl get) -gt 1920 ] && brightnessctl set 10%-
 
+# -- Workspaces
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -151,17 +155,29 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
+# for programmers dvorak
+bindsym $mod+Shift+1 workspace number $ws1
+bindsym $mod+Shift+2 workspace number $ws2
+bindsym $mod+Shift+3 workspace number $ws3
+bindsym $mod+Shift+4 workspace number $ws4
+bindsym $mod+Shift+5 workspace number $ws5
+bindsym $mod+Shift+6 workspace number $ws6
+bindsym $mod+Shift+7 workspace number $ws7
+bindsym $mod+Shift+8 workspace number $ws8
+bindsym $mod+Shift+9 workspace number $ws9
+bindsym $mod+Shift+0 workspace number $ws10
+
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Ctrl+1 move container to workspace number $ws1
+bindsym $mod+Ctrl+2 move container to workspace number $ws2
+bindsym $mod+Ctrl+3 move container to workspace number $ws3
+bindsym $mod+Ctrl+4 move container to workspace number $ws4
+bindsym $mod+Ctrl+5 move container to workspace number $ws5
+bindsym $mod+Ctrl+6 move container to workspace number $ws6
+bindsym $mod+Ctrl+7 move container to workspace number $ws7
+bindsym $mod+Ctrl+8 move container to workspace number $ws8
+bindsym $mod+Ctrl+9 move container to workspace number $ws9
+bindsym $mod+Ctrl+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -199,18 +215,20 @@ bindsym $mod+r mode "resize"
 
 # dark grey - #36454F
 # green     - #206030
-# solarized grey - #282828
+# solarized grey  - #282828
+# solarized brown - #504945
 
 set $accent #282828
 set $black  #000000FF
 set $white  #ffffff
 set $gray   #808080
+set $red    #900000
 
 # class                 border  backgr. text   indictr child_border
 client.focused          $accent $accent $white $black  $accent
 client.focused_inactive $black  $black  $white $black  $black
 client.unfocused        $black  $black  $gray  $black  $black
-client.urgent           #900000 #900000 $white #900000 #900000
+client.urgent           $red    $red    $white $red    $red
 client.placeholder      $black  $black  $white $black  $black
 
 bar {
@@ -224,6 +242,6 @@ bar {
                 focused_workspace  $accent $accent #ffffff
                 active_workspace   $accent $accent #808080
                 inactive_workspace $black  $black  #888888
-                urgent_workspace   #2f343a #900000 #ffffff
+                urgent_workspace   #2f343a $red    #ffffff
         }
 }
