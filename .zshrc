@@ -3,7 +3,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # using starship https://starship.rs/
 # fwalch, bureau, kardan, minimal, sammy
-ZSH_THEME="minimal"
+ZSH_THEME="sammy"
 
 plugins=(git)
 

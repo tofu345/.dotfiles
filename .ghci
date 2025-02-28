@@ -12,7 +12,7 @@ _status = \_ -> return $ ":!clear\n " ++ _breaks ++ _nl ++ _history ++ _nl ++ _b
 
 -- Show status on breakpoint
 -- :set stop :status
--- :set stop :list
+:set stop :list
 
 -- Useful commands
 :def hoogle \x -> return $ ":!hoogle \"" ++ x ++ "\""

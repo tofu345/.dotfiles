@@ -1,12 +1,12 @@
 # i3 config file (v4)
 # https://i3wm.org/docs/userguide.html - complete reference
 
-# -- Sets --
+# >-- Sets --<
 
 set $mod Mod4
+set $left h
 set $down j
 set $up k
-set $left h
 set $right l
 set $refresh_i3status killall -SIGUSR1 i3status
 
@@ -16,10 +16,12 @@ hide_edge_borders smart_no_gaps
 floating_modifier $mod
 tiling_drag modifier titlebar
 workspace_layout stacking
-floating_minimum_size 700 x 300
+# floating_minimum_size 500 x 300
 
-# for_window [class="Caja"] floating enable
-# for_window [class="Caja"] resize set 1200 700
+for_window [title="Figure .*"] floating enable
+
+for_window [class="Caja"] floating enable
+for_window [class="Caja"] resize set 1200 700
 
 for_window [class="org.gnome.Nautilus"] floating enable
 for_window [class="org.gnome.Nautilus"] resize set 1000 700
@@ -31,19 +33,19 @@ for_window [class="org.gnome.DejaDup"] floating enable
 for_window [title="WhatsApp Web"] floating enable
 for_window [class="zoom"] floating enable
 
-# -- Execs --
+# >-- Execs --<
+
+# Wallpaper - can't find one i like :<
+# exec --no-startup-id nitrogen --restore
 
 # don't turn off screen
 exec --no-startup-id xset s off
 exec --no-startup-id xset -dpms
 exec --no-startup-id xset s noblank
 
-# Load GTK Settings, dark style
-exec --no-startup-id /usr/libexec/gsd-xsettings
-exec --no-startup-id gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-
 # Picom
-exec_always --no-startup-id picom -b --vsync --backend xrender
+# '--transparent-clipping' for https://github.com/yshui/picom/issues/265, breaks menu shadows or whatever though
+exec_always --no-startup-id picom -b --config /home/tofs/.dotfiles/i3/picom.conf
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -60,7 +62,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -f -c 1a1a1a -k --
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-# -- Keybinds --
+# >-- Keybinds --<
 
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
@@ -81,6 +83,10 @@ bindsym $mod+Shift+space floating toggle
 # list open windows
 bindsym $mod+w exec --no-startup-id rofi -show window
 
+bindsym $mod+b bar mode dock
+bindsym $mod+Shift+b bar mode invisible
+bindsym $mod+u exec --no-startup-id $refresh_i3status
+
 # orientation
 bindsym $mod+o layout toggle split
 bindsym $mod+Ctrl+o layout stacked
@@ -89,6 +95,10 @@ bindsym $mod+Shift+o layout tabbed
 # new window position
 bindsym $mod+Shift+n split v
 bindsym $mod+n split h
+
+# Marks
+bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
+bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 bindsym $mod+p focus parent
 bindsym $mod+Shift+p focus child
@@ -128,7 +138,7 @@ bindcode 233 exec --no-startup-id brightnessctl set +10%
 # Make sure brightness is above the lowest, because u can set it to zero for some reason lol
 bindcode 232 exec --no-startup-id [ $(brightnessctl get) -gt 1920 ] && brightnessctl set 10%-
 
-# -- Workspaces
+# >-- Workspaces --<
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -167,17 +177,58 @@ bindsym $mod+Shift+8 workspace number $ws8
 bindsym $mod+Shift+9 workspace number $ws9
 bindsym $mod+Shift+0 workspace number $ws10
 
-# move focused container to workspace
-bindsym $mod+Ctrl+1 move container to workspace number $ws1
-bindsym $mod+Ctrl+2 move container to workspace number $ws2
-bindsym $mod+Ctrl+3 move container to workspace number $ws3
-bindsym $mod+Ctrl+4 move container to workspace number $ws4
-bindsym $mod+Ctrl+5 move container to workspace number $ws5
-bindsym $mod+Ctrl+6 move container to workspace number $ws6
-bindsym $mod+Ctrl+7 move container to workspace number $ws7
-bindsym $mod+Ctrl+8 move container to workspace number $ws8
-bindsym $mod+Ctrl+9 move container to workspace number $ws9
-bindsym $mod+Ctrl+0 move container to workspace number $ws10
+mode "send window to" {
+        # A mess, yes
+        bindsym 1 move container to workspace number $ws1
+        bindsym 2 move container to workspace number $ws2
+        bindsym 3 move container to workspace number $ws3
+        bindsym 4 move container to workspace number $ws4
+        bindsym 5 move container to workspace number $ws5
+        bindsym 6 move container to workspace number $ws6
+        bindsym 7 move container to workspace number $ws7
+        bindsym 8 move container to workspace number $ws8
+        bindsym 9 move container to workspace number $ws9
+        bindsym 0 move container to workspace number $ws10
+
+        bindsym Shift+1 move container to workspace number $ws1; mode "default"
+        bindsym Shift+2 move container to workspace number $ws2; mode "default"
+        bindsym Shift+3 move container to workspace number $ws3; mode "default"
+        bindsym Shift+4 move container to workspace number $ws4; mode "default"
+        bindsym Shift+5 move container to workspace number $ws5; mode "default"
+        bindsym Shift+6 move container to workspace number $ws6; mode "default"
+        bindsym Shift+7 move container to workspace number $ws7; mode "default"
+        bindsym Shift+8 move container to workspace number $ws8; mode "default"
+        bindsym Shift+9 move container to workspace number $ws9; mode "default"
+        bindsym Shift+0 move container to workspace number $ws10; mode "default"
+
+        bindsym $mod+1 move container to workspace number $ws1
+        bindsym $mod+2 move container to workspace number $ws2
+        bindsym $mod+3 move container to workspace number $ws3
+        bindsym $mod+4 move container to workspace number $ws4
+        bindsym $mod+5 move container to workspace number $ws5
+        bindsym $mod+6 move container to workspace number $ws6
+        bindsym $mod+7 move container to workspace number $ws7
+        bindsym $mod+8 move container to workspace number $ws8
+        bindsym $mod+9 move container to workspace number $ws9
+        bindsym $mod+0 move container to workspace number $ws10
+
+        bindsym $mod+Shift+1 move container to workspace number $ws1; mode "default"
+        bindsym $mod+Shift+2 move container to workspace number $ws2; mode "default"
+        bindsym $mod+Shift+3 move container to workspace number $ws3; mode "default"
+        bindsym $mod+Shift+4 move container to workspace number $ws4; mode "default"
+        bindsym $mod+Shift+5 move container to workspace number $ws5; mode "default"
+        bindsym $mod+Shift+6 move container to workspace number $ws6; mode "default"
+        bindsym $mod+Shift+7 move container to workspace number $ws7; mode "default"
+        bindsym $mod+Shift+8 move container to workspace number $ws8; mode "default"
+        bindsym $mod+Shift+9 move container to workspace number $ws9; mode "default"
+        bindsym $mod+Shift+0 move container to workspace number $ws10; mode "default"
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+s mode "default"
+}
+
+bindsym $mod+s mode "send window to"
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -188,20 +239,20 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        bindsym $mod+Ctrl+$left resize shrink width 100 px or 100 ppt
         bindsym $mod+Ctrl+$right resize grow width 100 px or 100 ppt
-        bindsym $mod+Ctrl+$down resize grow height 100 px or 100 ppt
-        bindsym $mod+Ctrl+$up resize shrink height 100 px or 100 ppt
+        bindsym $mod+Ctrl+$left resize shrink width 100 px or 100 ppt
+        bindsym $mod+Ctrl+$up resize grow height 100 px or 100 ppt
+        bindsym $mod+Ctrl+$down resize shrink height 100 px or 100 ppt
 
-        bindsym $mod+$left resize shrink width 15 px or 15 ppt
         bindsym $mod+$right resize grow width 15 px or 15 ppt
-        bindsym $mod+$down resize grow height 15 px or 15 ppt
-        bindsym $mod+$up resize shrink height 15 px or 15 ppt
+        bindsym $mod+$left resize shrink width 15 px or 15 ppt
+        bindsym $mod+$up resize grow height 15 px or 15 ppt
+        bindsym $mod+$down resize shrink height 15 px or 15 ppt
 
-        bindsym $mod+Shift+$left resize shrink width 5 px or 5 ppt
         bindsym $mod+Shift+$right resize grow width 5 px or 5 ppt
-        bindsym $mod+Shift+$down resize grow height 5 px or 5 ppt
-        bindsym $mod+Shift+$up resize shrink height 5 px or 5 ppt
+        bindsym $mod+Shift+$left resize shrink width 5 px or 5 ppt
+        bindsym $mod+Shift+$up resize grow height 5 px or 5 ppt
+        bindsym $mod+Shift+$down resize shrink height 5 px or 5 ppt
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -211,14 +262,15 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# -- Colors --
+# >-- Colors --<
 
 # dark grey - #36454F
+# lighter-dark grey - #29353d
 # green     - #206030
 # solarized grey  - #282828
 # solarized brown - #504945
 
-set $accent #282828
+set $accent #504945
 set $black  #000000FF
 set $white  #ffffff
 set $gray   #808080
