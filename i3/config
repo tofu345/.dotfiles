@@ -39,9 +39,7 @@ for_window [class="zoom"] floating enable
 # exec --no-startup-id nitrogen --restore
 
 # don't turn off screen
-exec --no-startup-id xset s off
-exec --no-startup-id xset -dpms
-exec --no-startup-id xset s noblank
+exec_always --no-startup-id xset s off s noblank -dpms
 
 # Picom
 # '--transparent-clipping' for https://github.com/yshui/picom/issues/265, breaks menu shadows or whatever though
@@ -122,7 +120,7 @@ bindsym $mod+t exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # This unholy amalgamation of code is to make sure the volume does not go above 100%, should probably have included the source but oh well
-bindsym XF86AudioRaiseVolume exec --no-startup-id [ $(pactl -- get-sink-volume "@DEFAULT_SINK@" | awk -F'/' '{print $2}' | sed 's/[^0-9]*//g') -lt 100 ] && pactl set-sink-volume 0 +5%
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
