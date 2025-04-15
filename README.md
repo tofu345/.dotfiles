@@ -1,4 +1,4 @@
-# .dotfiles
+# dotfiles
 
 A start.
 
