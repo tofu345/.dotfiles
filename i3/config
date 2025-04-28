@@ -18,8 +18,6 @@ tiling_drag modifier titlebar
 workspace_layout stacking
 # floating_minimum_size 500 x 300
 
-# for_window [title="Figure .*"] floating enable
-
 for_window [class="Caja"] floating enable
 for_window [class="Caja"] resize set 1200 700
 
@@ -35,8 +33,11 @@ for_window [class="zoom"] floating enable
 
 # >-- Execs --<
 
-# Wallpaper - can't find one i like :<
-# exec --no-startup-id nitrogen --restore
+exec --no-startup-id nitrogen --restore
+
+# Load GTK Settings, dark style
+exec --no-startup-id /usr/libexec/gsd-xsettings
+exec --no-startup-id gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 # don't turn off screen
 exec_always --no-startup-id xset s off s noblank -dpms
@@ -62,6 +63,10 @@ exec --no-startup-id nm-applet
 
 # >-- Keybinds --<
 
+bindsym $mod+left focus left
+bindsym $mod+down focus down
+bindsym $mod+up focus up
+bindsym $mod+right focus right
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
@@ -114,7 +119,7 @@ bindsym $mod+d exec "rofi -modi drun,run -show drun"
 # File explorer
 bindsym $mod+e exec --no-startup-id caja --no-desktop
 
-bindsym $mod+t exec i3-sensible-terminal
+bindsym $mod+t exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -203,6 +208,7 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
+        bindsym $mod+bracketleft mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -214,22 +220,23 @@ bindsym $mod+r mode "resize"
 # green     - #206030
 # solarized grey  - #282828
 # solarized brown - #504945
+# rosy brown - #543232CC
 
-set $accent #54323299
+set $accent #543232CC
 set $black  #000000FF
 set $white  #ffffff
 set $gray   #808080
 set $red    #900000
 
-# class                 border  backgr. text   indictr child_border
-client.focused          $accent $accent $white $black  $accent
-client.focused_inactive $black  $black  $white $black  $black
-client.unfocused        $black  $black  $gray  $black  $black
-client.urgent           $red    $red    $white $red    $red
-client.placeholder      $black  $black  $white $black  $black
+# class                 border  backgr. text    indictr child_border
+client.focused          $accent $accent $white  $black  $accent
+client.focused_inactive $black  $black  #bfbfbf $black  $black
+client.unfocused        $black  $black  $gray   $black  $black
+client.urgent           $red    $red    $white  $red    $red
+client.placeholder      $black  $black  $white  $black  $black
 
 bar {
-        status_command i3status --config ~/.config/i3/.i3status.conf
+        status_command i3status --config ~/.config/i3/i3status.conf
         colors {
                 background $black
                 statusline #ffffff

@@ -1,0 +1,22 @@
+[window]
+decorations = "None"
+opacity = 1.0
+
+[font]
+normal = { family = "CaskaydiaMono Nerd Font Mono", style = "Regular" }
+size = 13
+
+[colors.primary]
+background = "#000000"
+
+[cursor]
+style = { blinking = "Off" }
+vi_mode_style = { shape = "Block", blinking = "Off" }
+
+[mouse]
+hide_when_typing = true
+
+[keyboard]
+bindings = [
+    { key = "[", mods = "Alt", action = "ToggleViMode" },
+]
