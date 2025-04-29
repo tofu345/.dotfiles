@@ -13,7 +13,7 @@ source $ZSH/oh-my-zsh.sh
 unsetopt autocd
 setopt inc_append_history_time
 
-PATH="$PATH:/home/tofs/.dotfiles/bin"
+PATH="$PATH:/home/tofs/.local/bin:/home/tofs/.dotfiles/bin"
 
 PATH="$PATH:/usr/local/go/bin:/home/tofs/go/bin:$GOPATH/bin"
 
