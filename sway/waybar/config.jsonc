@@ -1,0 +1,116 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "spacing": 7, // Gaps between modules (5px)
+    // Choose the order of the modules
+    "modules-left": [
+        "sway/workspaces",
+        "sway/window"
+        // "sway/mode",
+    ],
+    "modules-center": [],
+    "modules-right": [
+        "tray",
+        "mpris",
+        "wireplumber",
+        "cpu",
+        "load",
+        "temperature",
+        "battery",
+        "clock",
+    ],
+
+    // * Module Configuration
+
+    "sway/workspaces": {
+        "all-outputs": false,
+        "warp-on-scroll": false,
+        "enable-bar-scroll": true,
+        "disable-scroll-wraparound": true,
+        "format": "{name}",
+        // "format": "{name}",
+        "format-icons": {
+            "urgent": "",
+            "focused": "",
+            "default": "",
+        }
+    },
+
+    "mpris": {
+        //"player": "Feishin",
+        // "format": "♪ {status_icon} {dynamic}",
+        "format": "♪ {dynamic}",
+        "interval": 1,
+        "dynamic-len": 60,
+        // "status-icons": {
+        //     "playing": "▶",
+        //     "paused": "⏸",
+        //     "stopped": ""
+        // },
+        "dynamic-order": ["title", "artist"],
+        //"ignored-players": ["firefox"]
+    },
+
+    "battery": {
+        "bat": "BAT0",
+        "design-capacity": true,
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{icon} {capacity}%",
+        "format-charging": "{capacity}% <span color='#33cc33'></span>",
+        "format-plugged": "{capacity}% <span color='#0099ff'></span>",
+        "format-icons": ["", "", "", "", ""],
+        "max-length": 25
+    },
+
+    // "sway/scratchpad": {
+    //     "format": "{icon} {count}",
+    //     "show-empty": false,
+    //     "format-icons": ["", ""],
+    //     "tooltip": true,
+    //     "tooltip-format": "{app}: {title}"
+    // },
+
+    "tray": {
+        "icon-size": 14,
+        "spacing": 10
+    },
+
+    "load": {
+        "format": " {}"
+    },
+
+    "cpu": {
+        "interval": 1,
+        "format": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
+        "format-icons": [
+            "<span color='#69ff94'>▁</span>", // green
+            "<span color='#2aa9ff'>▂</span>", // blue
+            "<span color='#f8f8f2'>▃</span>", // white
+            "<span color='#f8f8f2'>▄</span>", // white
+            "<span color='#ffffa5'>▅</span>", // yellow
+            "<span color='#ffffa5'>▆</span>", // yellow
+            "<span color='#ff9977'>▇</span>", // orange
+            "<span color='#dd532e'>█</span>"  // red
+        ]
+    },
+
+    "clock": {
+        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%a %d %b %g %H:%M}",
+    },
+
+    "wireplumber": {
+        "scroll-step": 5, // %, can be a float
+        "format": " {icon} {volume}%",
+        "format-muted": " 󰆪 {volume}%",
+        "format-icons": ["", "", ""],
+        // "format-icons": ["♪", "♪", "♪"],
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "pavucontrol"
+    }
+}

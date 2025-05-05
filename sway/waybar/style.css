@@ -1,0 +1,139 @@
+/* lots of inspiration from https://github.com/OriginCode/dotfiles and https://github.com/lgaboury/Sway-Waybar-Install-Script*/
+
+@define-color accent #402626;
+@define-color border transparent;
+@define-color color  white;
+
+@define-color err    #c20a0a;
+@define-color warn   #785e3a;
+
+* {
+    color: @color;
+    border: none;
+    border-radius: 7px;
+    margin: 0.1px 0px 0.1px 0px;
+    padding: 0 2px 0 2px;
+    font-family: "CaskaydiaMono Nerd Font";
+    font-size: 12px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0;
+}
+
+#workspaces {
+    padding: 0px 2px 0px 4px;
+    padding-right: 3px;
+    background-color: @accent;
+}
+
+#workspaces button {
+    font-weight: 100;
+    transition: none;
+    color: @color;
+    background-color: transparent;
+    padding: 1px;
+}
+
+#workspaces button.focused {
+    font-weight: 900;
+}
+
+#workspaces button.urgent {
+    color: red;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+    transition: none;
+    box-shadow: inherit;
+    text-shadow: inherit;
+    border-radius: inherit;
+    color: transparent;
+    background: transparent;
+}
+
+#workspaces button.focused {
+    color: white;
+}
+
+#clock {
+    padding: 0px 10px 0px 10px;
+    background-color: @accent;
+    transition: none;
+}
+
+#wireplumber {
+    transition: none;
+    padding: 0 8px 0 1px;
+    background-color: @accent;
+}
+
+#wireplumber.muted {}
+
+#mpris {
+    transition: none;
+    padding: 0 8px 0 8px;
+    background-color: #804a00;
+    color: white;
+}
+
+#cpu {
+    transition: none;
+    padding: 1px 7px 1px 7px;
+    background-color: @accent;
+}
+
+
+#load {
+    transition: none;
+    padding: 1px 7px 1px 7px;
+    background-color: @accent;
+}
+
+#temperature {
+    transition: none;
+    padding: 1px 7px 1px 7px;
+    background-color: @accent;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
+}
+
+#battery {
+    padding: 1px 14px 1px 7px;
+    background-color: @accent;
+}
+
+#battery.warning:not(.charging) {
+    background-color: @warn
+}
+
+#battery.critical:not(.charging) {
+    background: @err;
+    /* animation-name: blink; */
+    /* animation-duration: 0.5s; */
+    /* animation-timing-function: steps(12); */
+    /* animation-iteration-count: infinite; */
+    /* animation-direction: alternate; */
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: black;
+    }
+}
+
+#tray {
+    transition: none;
+    /* background-color: #333333; */
+    padding: 0 8px 0 8px;
+    border: none;
+}

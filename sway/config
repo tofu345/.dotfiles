@@ -21,17 +21,17 @@ set $refresh_i3status killall -SIGUSR1 i3status
 # on the original workspace that the command was run on.
 set $menu dmenu_path | wmenu | xargs swaymsg exec --
 
-font pango:monospace 9
-titlebar_padding 1 2
+font CaskaydiaMono Nerd Font 9
+titlebar_padding 5 3
 focus_follows_mouse no
 
 hide_edge_borders --i3 smart_no_gaps
 workspace_layout stacking
-smart_gaps on
+smart_gaps off
 smart_borders on
-default_border none
+default_border pixel 2
 
-xwayland enable
+xwayland force
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -56,26 +56,29 @@ output * bg /home/tofs/Pictures/Wallpapers/1341419.png fill
 # Notification Daemon
 exec swaync
 
-# # Toggle control center
-# bindsym $mod+Shift+n exec swaync-client -t -sw
+# Toggle control center
+bindsym $mod+n exec swaync-client -t -sw
 
 ### Idle configuration
-
+#
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
-exec swayidle -w \
-         timeout 300 'swaylock -f -c FFFFFF' \
-         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-         before-sleep 'swaylock -f -c FFFFFF'
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+#          before-sleep 'swaylock -f -c 000000'
+
+exec swayidle -w before-sleep 'swaylock -f -c 000000'
 
 # Fixed slow GTK app startup, e.g Firefox https://github.com/swaywm/sway/issues/5732#issuecomment-731466006
-exec "systemctl --user import-environment
+exec systemctl --user import-environment
 
 ### Input configuration
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
-#
+
 input "type:touchpad" {
     dwt enabled
     tap enabled
@@ -83,31 +86,25 @@ input "type:touchpad" {
     middle_emulation disabled
 }
 input "type:keyboard" {
-    xkb_layout "us,us"
-    xkb_variant "dvp,dvorak"
+    xkb_layout "real-prog-dvorak"
+    xkb_variant ""
     xkb_options "ctrl:ralt_rctrl,grp:shift_caps_toggle"
 }
 
-### Key bindings
+# Night light
+exec gammastep -O 4000
 
-# Start a terminal
+### Key bindings
 bindsym $mod+t exec $term
+bindsym $mod+d exec "rofi -modi drun,run -show drun"
+bindsym $mod+e exec nemo
+bindsym $mod+x exec firefox
+bindsym $mod+v exec vivaldi-stable --password-store=gnome-libsecret
 
 # Kill focused window
 bindsym $mod+Shift+q kill
 
-# Start your launcher
-bindsym $mod+d exec "rofi -modi drun,run -show drun"
-
-# TODO
-# bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
-# bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
-
-# Start File Explorer
-bindsym $mod+e exec nemo
-
-bindsym $mod+x exec firefox
-bindsym $mod+v exec vivaldi
+bindsym $mod+u exec --no-startup-id $refresh_i3status
 
 # TODO: Does not show all windows
 # bindsym $mod+w exec rofi -show window
@@ -119,12 +116,9 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 # bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-bindsym $mod+u exec --no-startup-id $refresh_i3status
-
 # take a screenshot of a screen region, copy it to a clipboard
-bindsym --release Print exec grim -g "$(slurp)" - | wl-copy -t image/png
-# this pastes image in screenshot folder
-# bindsym --release Print exec grim -g "$(slurp)" - | wl-copy -t image/png && wl-paste --no-newline --type image/png > "/home/tofs/Pictures/Screenshots/$(date +'%s_screenshot.png')"
+bindsym --release Print exec grim -g "$(slurp)" - | wl-copy -t image/png && wl-paste --no-newline --type image/png > "/home/tofs/Pictures/Screenshots/$(date +'%s_screenshot.png')"
+bindsym --release Shift+Print exec grim - | wl-copy -t image/png && wl-paste --no-newline --type image/png > "/home/tofs/Pictures/Screenshots/$(date +'%s_screenshot.png')"
 
 # Control Brightness; MUST DO: `usermod -aG video ${USER}` to use brightnessctl without sudo and logout (or reboot)
 bindcode 233 exec --no-startup-id brightnessctl set +10%
@@ -192,13 +186,11 @@ bindcode $mod+Shift+16 move container to workspace number 7
 bindcode $mod+Shift+17 move container to workspace number 8
 bindcode $mod+Shift+18 move container to workspace number 9
 bindcode $mod+Shift+19 move container to workspace number 10
-# Note: workspaces can have any name you want, not just numbers.
-# We just use 1-10 as the default.
 
-# Layout stuff:
+# Layout
 #
-bindsym $mod+n splitv
-bindsym $mod+Shift+n splith
+bindsym $mod+s splitv
+bindsym $mod+Shift+s splith
 
 # Switch the current container between different layout styles
 bindsym $mod+Ctrl+o layout stacking
@@ -259,34 +251,33 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-set $accent "#543232"
+set $accent #402626
 set $black  #000000
 set $white  #ffffff
 set $gray   #808080
-set $red    #900000
+set $red    #c20a0a
 set $transparent  #000000FF
 
 # class                 border  backgr. text    indictr child_border
 client.background               #000000
 client.focused          $accent $accent $white  $black  $accent
-client.focused_inactive $black  $black  #bfbfbf $black  $accent
-client.unfocused        $black  $black  $gray   $black  $accent
+client.focused_inactive $black  $black  #bfbfbf $black  $transparent
+client.unfocused        $black  $black  $gray   $black  $transparent
 client.urgent           $red    $red    $white  $red    $red
-client.placeholder      $black  $black  $white  $black  $black
 
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    position bottom
+    font pango:monospace 9
+    position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %X'; do sleep 1; done
     # status_command while ~/.dotfiles/sway/swaybar.sh; do sleep 1; done
-
-    # It works
-    status_command i3status --config ~/.config/i3/i3status.conf
+    # status_command i3status --config ~/.config/i3/i3status.conf
+    swaybar_command waybar
 
     colors {
         background #000000
