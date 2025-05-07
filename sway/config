@@ -28,10 +28,10 @@ focus_follows_mouse no
 hide_edge_borders --i3 smart_no_gaps
 workspace_layout stacking
 
-gaps inner 3
+gaps inner 5
 smart_gaps off
 smart_borders off
-default_border pixel 3
+default_border pixel 5
 
 xwayland force
 
@@ -46,6 +46,7 @@ floating_modifier $mod normal
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /home/tofs/Pictures/Wallpapers/1341419.png fill
+# output * bg #000000 solid_color
 #
 # Example configuration:
 #
@@ -255,7 +256,7 @@ bindsym $mod+r mode "resize"
 
 set $accent     #402626
 set $black      #000000
-set $accentT    $accent33
+set $accentT    $accent00
 set $white      #ffffff
 set $gray       #808080
 set $red        #802000

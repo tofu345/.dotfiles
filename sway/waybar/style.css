@@ -1,4 +1,4 @@
-/* lots of inspiration from https://github.com/OriginCode/dotfiles and https://github.com/lgaboury/Sway-Waybar-Install-Script*/
+/* lots of inspiration from https://github.com/OriginCode/dotfiles and https://github.com/lgaboury/Sway-Waybar-Install-Script and https://github.com/lingllqs/dotfiles */
 
 @define-color accent #402626;
 @define-color border transparent;
@@ -8,23 +8,22 @@
 @define-color warn   #785e3a;
 
 * {
-    color: @color;
+    /* color: @color; */
     border: none;
     border-radius: 5px;
-    margin: 0.1px 0px 0px 0px;
-    padding: 0 2px 0 2px;
     font-family: "CaskaydiaMono Nerd Font";
     font-size: 12px;
     min-height: 0;
 }
 
 window#waybar {
-    background: transparent;
+    background-color: transparent;
+    padding: 10px;
 }
 
-/* #window { */
-/*     background: blue; */
-/* } */
+#window {
+    padding: 5px;
+}
 
 window#waybar.hidden #window {
     opacity: 0;
@@ -40,20 +39,23 @@ window#waybar.hidden #window {
 /* } */
 
 #workspaces {
-    padding: 0px;
+    padding: 0;
+    margin: 0;
     background-color: transparent;
 }
 
 #workspaces button {
-    padding: 3px;
-    margin: 0 1px;
+    padding: 4px;
     font-weight: 100;
     /* color: @accent; */
     background-color: transparent;
-    transition: background-color 0.2s ease-in;
+    transition: padding 0.1s ease-in;
+    transition-delay: 100ms;
 }
 
 #workspaces button.focused {
+    padding-left: 15px;
+    padding-right: 15px;
     font-weight: 900;
     color: white;
     background-color: @accent;

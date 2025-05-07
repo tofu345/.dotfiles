@@ -1,11 +1,14 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "spacing": 5, // Gaps between modules (5px)
-    // Choose the order of the modules
+    "layer": "top",
+    "position": "top",
+    "spacing": 5,
+    "margin": "5 5 0 5",
+    // "height": 30,
+    "ipc": true,
+
     "modules-left": [
         "sway/workspaces",
-        // "sway/window", // Until window#waybar.stacked, window#waybar.tabbed and window#waybar.tiled css classes work https://github.com/Alexays/Waybar/issues/1399
+        // "sway/window", // Until window#waybar.stacked, tabbed and tiled css classes work https://github.com/Alexays/Waybar/issues/1399
         "sway/mode"
     ],
     "modules-center": [],
@@ -16,7 +19,6 @@
         "cpu",
         "load",
         "memory",
-        // "temperature",
         "battery",
         "clock",
     ],
@@ -29,29 +31,12 @@
         "enable-bar-scroll": true,
         "disable-scroll-wraparound": true,
         "format": "{name}",
-        // "format-icons": {
-        //     "urgent": "",
-        //     "focused": "",
-        //     "default": "",
-        // }
-    },
-
-    "sway/window": {
-        "format": "{title}",
-        "max-length": 100,
     },
 
     "mpris": {
-        //"player": "Feishin",
-        // "format": "♪ {status_icon} {dynamic}",
         "format": "♪ {dynamic}",
         "interval": 1,
         "dynamic-len": 60,
-        // "status-icons": {
-        //     "playing": "▶",
-        //     "paused": "⏸",
-        //     "stopped": ""
-        // },
         "dynamic-order": ["title", "artist"],
         //"ignored-players": ["firefox"]
     },
