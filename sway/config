@@ -27,9 +27,11 @@ focus_follows_mouse no
 
 hide_edge_borders --i3 smart_no_gaps
 workspace_layout stacking
+
+gaps inner 3
 smart_gaps off
-smart_borders on
-default_border pixel 2
+smart_borders off
+default_border pixel 3
 
 xwayland force
 
@@ -92,7 +94,7 @@ input "type:keyboard" {
 }
 
 # Night light
-exec gammastep -O 4000
+exec gammastep -O 3000
 
 ### Key bindings
 bindsym $mod+t exec $term
@@ -110,7 +112,7 @@ bindsym $mod+u exec --no-startup-id $refresh_i3status
 # bindsym $mod+w exec rofi -show window
 
 # This unholy amalgamation is to make sure the volume does not go above 100%,
-# should probably have been included in pactl but oh well
+# should probably have been included in pactl, maybe it is works :P
 bindsym XF86AudioRaiseVolume exec --no-startup-id [ $(pactl -- get-sink-volume "@DEFAULT_SINK@" | awk -F'/' '{print $2}' | sed 's/[^0-9]*//g') -lt 100 ] && pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -251,23 +253,25 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-set $accent #402626
-set $black  #000000
-set $white  #ffffff
-set $gray   #808080
-set $red    #c20a0a
-set $transparent  #000000FF
+set $accent     #402626
+set $black      #000000
+set $accentT    $accent33
+set $white      #ffffff
+set $gray       #808080
+set $red        #802000
+set $transprnt  #00000000
 
-# class                 border  backgr. text    indictr child_border
-client.background               #000000
-client.focused          $accent $accent $white  $black  $accent
-client.focused_inactive $black  $black  #bfbfbf $black  $transparent
-client.unfocused        $black  $black  $gray   $black  $transparent
-client.urgent           $red    $red    $white  $red    $red
+# class                 border    backgr.   text     indictr   child_border
+client.background                 #000000
+client.focused          $accent   $accent   $white   $accent   $accent
+client.focused_inactive $accentT  $accentT  $white   $accentT  $accentT
+client.unfocused        $accentT  $accentT  $whiteBB $accentT  $accentT
+client.urgent           $red      $red      $white   $red      $red
 
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
+
 bar {
     font pango:monospace 9
     position top

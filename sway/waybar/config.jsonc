@@ -1,12 +1,12 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
-    "spacing": 7, // Gaps between modules (5px)
+    "spacing": 5, // Gaps between modules (5px)
     // Choose the order of the modules
     "modules-left": [
         "sway/workspaces",
-        "sway/window"
-        // "sway/mode",
+        // "sway/window", // Until window#waybar.stacked, window#waybar.tabbed and window#waybar.tiled css classes work https://github.com/Alexays/Waybar/issues/1399
+        "sway/mode"
     ],
     "modules-center": [],
     "modules-right": [
@@ -15,7 +15,8 @@
         "wireplumber",
         "cpu",
         "load",
-        "temperature",
+        "memory",
+        // "temperature",
         "battery",
         "clock",
     ],
@@ -28,12 +29,16 @@
         "enable-bar-scroll": true,
         "disable-scroll-wraparound": true,
         "format": "{name}",
-        // "format": "{name}",
-        "format-icons": {
-            "urgent": "",
-            "focused": "",
-            "default": "",
-        }
+        // "format-icons": {
+        //     "urgent": "",
+        //     "focused": "",
+        //     "default": "",
+        // }
+    },
+
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 100,
     },
 
     "mpris": {
@@ -56,7 +61,6 @@
         "design-capacity": true,
         "interval": 60,
         "states": {
-            "warning": 30,
             "critical": 15
         },
         "format": "{capacity}% {icon}",
@@ -81,7 +85,14 @@
     },
 
     "load": {
-        "format": " {}"
+        "format": " {}"
+    },    
+
+    "memory": {
+        "interval": 30,
+        "format": " {percentage}%",
+        "format-alt": " {used:0.1f}G/{total:0.1f}G",
+        "max-length": 100
     },
 
     "cpu": {
@@ -100,16 +111,16 @@
     },
 
     "clock": {
-        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": 
+            "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format": "{:%a %d %b %g %H:%M}",
     },
 
     "wireplumber": {
         "scroll-step": 5, // %, can be a float
         "format": " {icon} {volume}%",
-        "format-muted": " 󰆪 {volume}%",
+        "format-muted": " <span color='red'>{icon}</span> {volume}%",
         "format-icons": ["", "", ""],
-        // "format-icons": ["♪", "♪", "♪"],
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-click-right": "pavucontrol"
     }

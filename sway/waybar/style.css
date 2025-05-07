@@ -4,14 +4,14 @@
 @define-color border transparent;
 @define-color color  white;
 
-@define-color err    #c20a0a;
+@define-color err    #802000;
 @define-color warn   #785e3a;
 
 * {
     color: @color;
     border: none;
-    border-radius: 7px;
-    margin: 0.1px 0px 0.1px 0px;
+    border-radius: 5px;
+    margin: 0.1px 0px 0px 0px;
     padding: 0 2px 0 2px;
     font-family: "CaskaydiaMono Nerd Font";
     font-size: 12px;
@@ -22,30 +22,45 @@ window#waybar {
     background: transparent;
 }
 
-window#waybar.hidden {
+/* #window { */
+/*     background: blue; */
+/* } */
+
+window#waybar.hidden #window {
     opacity: 0;
 }
 
+#mode {
+    color: red;
+}
+
+/* window#waybar.tiled { */
+/*     opacity: 0; */
+/*     background: blue; */
+/* } */
+
 #workspaces {
-    padding: 0px 2px 0px 4px;
-    padding-right: 3px;
-    background-color: @accent;
+    padding: 0px;
+    background-color: transparent;
 }
 
 #workspaces button {
+    padding: 3px;
+    margin: 0 1px;
     font-weight: 100;
-    transition: none;
-    color: @color;
+    /* color: @accent; */
     background-color: transparent;
-    padding: 1px;
+    transition: background-color 0.2s ease-in;
 }
 
 #workspaces button.focused {
     font-weight: 900;
+    color: white;
+    background-color: @accent;
 }
 
 #workspaces button.urgent {
-    color: red;
+    background-color: @err;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -54,12 +69,10 @@ window#waybar.hidden {
     box-shadow: inherit;
     text-shadow: inherit;
     border-radius: inherit;
-    color: transparent;
-    background: transparent;
-}
-
-#workspaces button.focused {
-    color: white;
+    color: inherit;
+    background: @accent;
+    background-color: transparent;
+    /* transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682); */
 }
 
 #clock {
@@ -96,7 +109,7 @@ window#waybar.hidden {
     background-color: @accent;
 }
 
-#temperature {
+#memory {
     transition: none;
     padding: 1px 7px 1px 7px;
     background-color: @accent;
@@ -107,7 +120,7 @@ window#waybar.hidden {
 }
 
 #battery {
-    padding: 1px 14px 1px 7px;
+    padding: 1px 13px 1px 7px;
     background-color: @accent;
 }
 

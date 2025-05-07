@@ -12,7 +12,7 @@ case $# in
             exit 0
         elif [[ $1 == "-l" ]]; then
             for item in "${available_modes[@]}"; do
-                echo "- $item"
+                echo "$item"
             done
             exit 0
         else
