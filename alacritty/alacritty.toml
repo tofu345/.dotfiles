@@ -3,11 +3,11 @@ background = "#000000"
 
 [font]
 normal = { family = "CaskaydiaMono Nerd Font Mono", style = "Regular" }
-size = 15.2
+size = 15.9
 
 [window]
-decorations = "None"
-opacity = 0.95
+# decorations = "None"
+opacity = 1
 # blur = true
 
 [cursor]

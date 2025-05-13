@@ -8,7 +8,7 @@ include /etc/sway/config-vars.d/*
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
-# Home row direction keys, like vim
+
 set $left h
 set $down j
 set $up k
@@ -26,12 +26,12 @@ titlebar_padding 5 3
 focus_follows_mouse no
 
 hide_edge_borders --i3 smart_no_gaps
-workspace_layout stacking
+workspace_layout default
 
-gaps inner 5
-smart_gaps off
-smart_borders off
-default_border pixel 5
+gaps inner 0
+smart_gaps on
+smart_borders on
+default_border pixel 0
 
 xwayland force
 
@@ -45,7 +45,7 @@ floating_modifier $mod normal
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/tofs/Pictures/Wallpapers/1341419.png fill
+output * bg /home/tofs/Pictures/Wallpapers/699547.png fill
 # output * bg #000000 solid_color
 #
 # Example configuration:
@@ -89,13 +89,14 @@ input "type:touchpad" {
     middle_emulation disabled
 }
 input "type:keyboard" {
-    xkb_layout "real-prog-dvorak"
+    xkb_layout "real-prog-dvorak,us"
     xkb_variant ""
-    xkb_options "ctrl:ralt_rctrl,grp:shift_caps_toggle"
+    xkb_options "ctrl:ralt_rctrl,grp:win_space_toggle"
+    # xkb_options "ctrl:swap_rwin_rctl"
 }
 
 # Night light
-exec gammastep -O 3000
+exec gammastep -O 2500
 
 ### Key bindings
 bindsym $mod+t exec $term
@@ -107,21 +108,22 @@ bindsym $mod+v exec vivaldi-stable --password-store=gnome-libsecret
 # Kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+u exec --no-startup-id $refresh_i3status
+# bindsym $mod+u exec --no-startup-id $refresh_i3status
 
 # TODO: Does not show all windows
 # bindsym $mod+w exec rofi -show window
 
 # This unholy amalgamation is to make sure the volume does not go above 100%,
-# should probably have been included in pactl, maybe it is works :P
+# should probably have been included in pactl, maybe it is, works :P
 bindsym XF86AudioRaiseVolume exec --no-startup-id [ $(pactl -- get-sink-volume "@DEFAULT_SINK@" | awk -F'/' '{print $2}' | sed 's/[^0-9]*//g') -lt 100 ] && pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 # bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # take a screenshot of a screen region, copy it to a clipboard
-bindsym --release Print exec grim -g "$(slurp)" - | wl-copy -t image/png && wl-paste --no-newline --type image/png > "/home/tofs/Pictures/Screenshots/$(date +'%s_screenshot.png')"
-bindsym --release Shift+Print exec grim - | wl-copy -t image/png && wl-paste --no-newline --type image/png > "/home/tofs/Pictures/Screenshots/$(date +'%s_screenshot.png')"
+bindsym --release Print exec grim -g "$(slurp)" - | wl-copy -t image/png
+# && wl-paste --no-newline --type image/png > "/home/tofs/Pictures/Screenshots/$(date +'%s_screenshot.png')"
+bindsym --release Shift+Print exec grim - | wl-copy -t image/png
 
 # Control Brightness; MUST DO: `usermod -aG video ${USER}` to use brightnessctl without sudo and logout (or reboot)
 bindcode 233 exec --no-startup-id brightnessctl set +10%
@@ -254,25 +256,24 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-set $accent     #402626
+# set $accent     #402626
 set $black      #000000
-set $accentT    $accent00
+set $blackT     #000000EE
 set $white      #ffffff
-set $gray       #808080
 set $red        #802000
 set $transprnt  #00000000
 
-# class                 border    backgr.   text     indictr   child_border
-client.background                 #000000
-client.focused          $accent   $accent   $white   $accent   $accent
-client.focused_inactive $accentT  $accentT  $white   $accentT  $accentT
-client.unfocused        $accentT  $accentT  $whiteBB $accentT  $accentT
+client.background #000000
+
+# class                 border    backgr.   text     indictr   child_brdr
+client.focused          $blackT   $blackT   $white   $black    $black
+client.focused_inactive $blackT   $blackT   #bfbfbf  $black    $black
+client.unfocused        $blackT   $blackT   #737373  $black    $black
 client.urgent           $red      $red      $white   $red      $red
 
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-
 bar {
     font pango:monospace 9
     position top
@@ -284,16 +285,16 @@ bar {
     # status_command i3status --config ~/.config/i3/i3status.conf
     swaybar_command waybar
 
-    colors {
-        background #000000
-        statusline #FFFFFF
-        separator  #404040
-
-        # target           border    bg        text
-        inactive_workspace #32323200 #32323200 #5c5c5c
-        focused_workspace  #000000   $accent   #FFFFFF
-        active_workspace   #000000   #808080   #FFFFFF
-        inactive_workspace #000000   #000000   #FFFFFF
-        urgent_workspace   #2f343a   #900000   #ffffff
-    }
+    # colors {
+    #     background #000000
+    #     statusline #FFFFFF
+    #     separator  #404040
+    #
+    #     # target           border    bg        text
+    #     inactive_workspace #32323200 #32323200 #5c5c5c
+    #     focused_workspace  #000000   $accent   #FFFFFF
+    #     active_workspace   #000000   #808080   #FFFFFF
+    #     inactive_workspace #000000   #000000   #FFFFFF
+    #     urgent_workspace   #2f343a   #900000   #ffffff
+    # }
 }

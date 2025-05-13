@@ -2,8 +2,8 @@
     "layer": "top",
     "position": "top",
     "spacing": 5,
-    "margin": "5 5 0 5",
-    // "height": 30,
+    "margin": "5 5 5 5",
+    "height": 17,
     "ipc": true,
 
     "modules-left": [
@@ -14,7 +14,7 @@
     "modules-center": [],
     "modules-right": [
         "tray",
-        "mpris",
+        // "mpris",
         "wireplumber",
         "cpu",
         "load",
@@ -49,10 +49,10 @@
             "critical": 15
         },
         "format": "{capacity}% {icon}",
-        "format-full": "{icon} {capacity}%",
-        "format-charging": "{capacity}% <span color='#33cc33'></span>",
-        "format-plugged": "{capacity}% <span color='#0099ff'></span>",
-        "format-icons": ["", "", "", "", ""],
+        // "format-full": "{icon} {capacity}%",
+        "format-charging": "{capacity}% <span color='#33cc33'>{icon}</span>",
+        "format-plugged": "{capacity}% <span color='#0099ff'>{icon}</span>",
+        "format-icons": ["", "", "", "", ""], // 
         "max-length": 25
     },
 
@@ -93,6 +93,7 @@
             "<span color='#ff9977'>▇</span>", // orange
             "<span color='#dd532e'>█</span>"  // red
         ]
+        // "format-icons": [ "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█" ]
     },
 
     "clock": {
@@ -103,8 +104,8 @@
 
     "wireplumber": {
         "scroll-step": 5, // %, can be a float
-        "format": " {icon} {volume}%",
-        "format-muted": " <span color='red'>{icon}</span> {volume}%",
+        "format": "{icon} {volume}%",
+        "format-muted": "<span color='red'>{icon} {volume}%</span>",
         "format-icons": ["", "", ""],
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-click-right": "pavucontrol"

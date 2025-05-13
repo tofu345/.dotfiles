@@ -1,16 +1,16 @@
 /* lots of inspiration from https://github.com/OriginCode/dotfiles and https://github.com/lgaboury/Sway-Waybar-Install-Script and https://github.com/lingllqs/dotfiles */
 
-@define-color accent #402626;
+@define-color accent rgba(0, 0, 0, 1);
 @define-color border transparent;
 @define-color color  white;
 
 @define-color err    #802000;
 @define-color warn   #785e3a;
+@define-color bg     rgba(0, 0, 0, 0.7);
 
 * {
-    /* color: @color; */
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     font-family: "CaskaydiaMono Nerd Font";
     font-size: 12px;
     min-height: 0;
@@ -18,7 +18,6 @@
 
 window#waybar {
     background-color: transparent;
-    padding: 10px;
 }
 
 #window {
@@ -45,21 +44,22 @@ window#waybar.hidden #window {
 }
 
 #workspaces button {
-    padding: 4px;
+    margin: 0;
+    padding: 0 3px;
     font-weight: 100;
-    /* color: @accent; */
-    background-color: transparent;
-    transition: padding 0.1s ease-in;
-    transition-delay: 100ms;
+    transition: font-weight 0.05s ease-in;
+    transition-delay: 150ms;
 }
 
 #workspaces button.focused {
-    padding-left: 15px;
-    padding-right: 15px;
     font-weight: 900;
     color: white;
-    background-color: @accent;
 }
+
+/* #workspaces button.empty { */
+/*     padding-left: 15px; */
+/*     padding-right: 15px; */
+/* } */
 
 #workspaces button.urgent {
     background-color: @err;
@@ -73,19 +73,18 @@ window#waybar.hidden #window {
     border-radius: inherit;
     color: inherit;
     background: @accent;
-    background-color: transparent;
-    /* transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682); */
+    background-color: @accent;
 }
 
 #clock {
-    padding: 0px 10px 0px 10px;
+    padding: 0px 7px 0px 7px;
     background-color: @accent;
     transition: none;
 }
 
 #wireplumber {
     transition: none;
-    padding: 0 8px 0 1px;
+    padding: 0px 7px 0px 7px;
     background-color: @accent;
 }
 
@@ -93,45 +92,45 @@ window#waybar.hidden #window {
 
 #mpris {
     transition: none;
-    padding: 0 8px 0 8px;
+    padding: 0px 7px 0px 7px;
     background-color: #804a00;
     color: white;
 }
 
 #cpu {
     transition: none;
-    padding: 1px 7px 1px 7px;
+    padding: 0px 7px 0px 7px;
     background-color: @accent;
 }
 
 
 #load {
     transition: none;
-    padding: 1px 7px 1px 7px;
+    padding: 0px 7px 0px 7px;
     background-color: @accent;
 }
 
 #memory {
     transition: none;
-    padding: 1px 7px 1px 7px;
+    padding: 0px 7px 0px 7px;
     background-color: @accent;
 }
 
-#temperature.critical {
+/* #temperature.critical {
     background-color: #eb4d4b;
-}
+} */
 
 #battery {
-    padding: 1px 13px 1px 7px;
+    padding: 0px 13px 0px 5px;
     background-color: @accent;
 }
 
-#battery.warning:not(.charging) {
-    background-color: @warn
-}
+/* #battery.warning:not(.charging) { */
+/*     background-color: @warn */
+/* } */
 
 #battery.critical:not(.charging) {
-    background: @err;
+    color: #ff4000;
     /* animation-name: blink; */
     /* animation-duration: 0.5s; */
     /* animation-timing-function: steps(12); */
@@ -148,7 +147,6 @@ window#waybar.hidden #window {
 
 #tray {
     transition: none;
-    /* background-color: #333333; */
-    padding: 0 8px 0 8px;
+    padding: 0px 7px 0px 7px;
     border: none;
 }

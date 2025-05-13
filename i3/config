@@ -38,7 +38,7 @@ exec_always setxkbmap -layout real-prog-dvorak
 # Night light
 exec gammastep -O 3000
 
-exec --no-startup-id nitrogen --restore
+# exec --no-startup-id nitrogen --restore
 
 # Load GTK Settings, dark style
 exec --no-startup-id /usr/libexec/gsd-xsettings
