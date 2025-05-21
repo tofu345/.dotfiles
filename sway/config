@@ -4,36 +4,32 @@
 
 include /etc/sway/config-vars.d/*
 
-### Variables
+# * Variables
 #
-# Logo key. Use Mod1 for Alt.
+# Logo (Super) key. Use Mod1 for Alt.
 set $mod Mod4
-
 set $left h
 set $down j
 set $up k
 set $right l
+
 set $term alacritty
-set $refresh_i3status killall -SIGUSR1 i3status
+set $wallpaper /home/tofs/Pictures/Wallpapers/1363709.png
+set $menu "rofi -modi drun,run -show drun"
 
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $menu dmenu_path | wmenu | xargs swaymsg exec --
-
-font CaskaydiaMono Nerd Font 9
+font 'CaskaydiaMono Nerd Font' 9
 titlebar_padding 5 3
 focus_follows_mouse no
 
 hide_edge_borders --i3 smart_no_gaps
-workspace_layout default
+workspace_layout tabbed
 
 gaps inner 0
 smart_gaps on
 smart_borders on
-default_border pixel 0
+default_border pixel 1
 
-xwayland force
+xwayland enable
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -42,10 +38,14 @@ xwayland force
 # mouse button for dragging.
 floating_modifier $mod normal
 
-### Output configuration
+# Load GTK Settings, dark style
+exec --no-startup-id /usr/libexec/gsd-xsettings
+exec --no-startup-id gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+
+# * Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /home/tofs/Pictures/Wallpapers/699547.png fill
+output * bg $wallpaper fill
 # output * bg #000000 solid_color
 #
 # Example configuration:
@@ -54,7 +54,7 @@ output * bg /home/tofs/Pictures/Wallpapers/699547.png fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-### Sway NC
+# * Sway NC
 #
 # Notification Daemon
 exec swaync
@@ -62,7 +62,7 @@ exec swaync
 # Toggle control center
 bindsym $mod+n exec swaync-client -t -sw
 
-### Idle configuration
+# * Idle configuration
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -73,52 +73,50 @@ bindsym $mod+n exec swaync-client -t -sw
 #          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
 #          before-sleep 'swaylock -f -c 000000'
 
-exec swayidle -w before-sleep 'swaylock -f -c 000000'
+# * Exec's
+#
+exec swayidle -w before-sleep 'swaylock -f -c 000000 --indicator-idle-visible'
 
 # Fixed slow GTK app startup, e.g Firefox https://github.com/swaywm/sway/issues/5732#issuecomment-731466006
 exec systemctl --user import-environment
 
-### Input configuration
+# Night light
+exec gammastep -O 3000
+
+# * Input configuration
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
-
 input "type:touchpad" {
     dwt enabled
     tap enabled
     natural_scroll enabled
     middle_emulation disabled
 }
+
 input "type:keyboard" {
     xkb_layout "real-prog-dvorak,us"
     xkb_variant ""
-    xkb_options "ctrl:ralt_rctrl,grp:win_space_toggle"
-    # xkb_options "ctrl:swap_rwin_rctl"
+    xkb_options "ctrl:ralt_rctrl,altwin:swap_lalt_lwin,grp:alt_space_toggle"
 }
 
-# Night light
-exec gammastep -O 2500
 
-### Key bindings
 bindsym $mod+t exec $term
-bindsym $mod+d exec "rofi -modi drun,run -show drun"
+bindsym $mod+Shift+t exec gnome-terminal
+bindsym $mod+d exec $menu
 bindsym $mod+e exec nemo
 bindsym $mod+x exec firefox
 bindsym $mod+v exec vivaldi-stable --password-store=gnome-libsecret
+bindsym $mod+z exec flatpak run app.zen_browser.zen
+
+# Clear clipboards
+bindsym $mod+Shift+v exec ~/.local/bin/clipdel -d ".*" && wl-copy --clear
 
 # Kill focused window
 bindsym $mod+Shift+q kill
 
-# bindsym $mod+u exec --no-startup-id $refresh_i3status
-
-# TODO: Does not show all windows
-# bindsym $mod+w exec rofi -show window
-
-# This unholy amalgamation is to make sure the volume does not go above 100%,
-# should probably have been included in pactl, maybe it is, works :P
-bindsym XF86AudioRaiseVolume exec --no-startup-id [ $(pactl -- get-sink-volume "@DEFAULT_SINK@" | awk -F'/' '{print $2}' | sed 's/[^0-9]*//g') -lt 100 ] && pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
-# bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
 # take a screenshot of a screen region, copy it to a clipboard
 bindsym --release Print exec grim -g "$(slurp)" - | wl-copy -t image/png
@@ -129,13 +127,6 @@ bindsym --release Shift+Print exec grim - | wl-copy -t image/png
 bindcode 233 exec --no-startup-id brightnessctl set +10%
 # Make sure brightness is above the lowest, because u can set it to zero for some reason lol
 bindcode 232 exec --no-startup-id [ $(brightnessctl get) -gt 1920 ] && brightnessctl set 10%-
-
-# Drag floating windows by holding down $mod and left mouse button.
-# Resize them with right mouse button + $mod.
-# Despite the name, also works for non-floating windows.
-# Change normal to inverse to use left mouse button for resizing and right
-# mouse button for dragging.
-floating_modifier $mod normal
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
@@ -194,8 +185,8 @@ bindcode $mod+Shift+19 move container to workspace number 10
 
 # Layout
 #
-bindsym $mod+s splitv
-bindsym $mod+Shift+s splith
+bindsym $mod+s splith
+bindsym $mod+Shift+s splitv
 
 # Switch the current container between different layout styles
 bindsym $mod+Ctrl+o layout stacking
@@ -228,10 +219,10 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
+    # (h) left will shrink the containers width
+    # (l) right will grow the containers width
+    # (k) up will shrink the containers height
+    # (j) down will grow the containers height
 
     bindsym $left resize shrink width 10px
     bindsym $down resize grow height 10px
@@ -256,20 +247,18 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# set $accent     #402626
 set $black      #000000
-set $blackT     #000000EE
+set $blackT     #000000AA
 set $white      #ffffff
 set $red        #802000
-set $transprnt  #00000000
 
 client.background #000000
 
 # class                 border    backgr.   text     indictr   child_brdr
-client.focused          $blackT   $blackT   $white   $black    $black
+client.focused          $blackT   $blackT   $white   $black    #4d4d4d
 client.focused_inactive $blackT   $blackT   #bfbfbf  $black    $black
 client.unfocused        $blackT   $blackT   #737373  $black    $black
-client.urgent           $red      $red      $white   $red      $red
+client.urgent           $blackT   $blackT   #ff0000  $black    $red
 
 # Status Bar:
 #
@@ -277,24 +266,5 @@ client.urgent           $red      $red      $white   $red      $red
 bar {
     font pango:monospace 9
     position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    # status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-    # status_command while ~/.dotfiles/sway/swaybar.sh; do sleep 1; done
-    # status_command i3status --config ~/.config/i3/i3status.conf
     swaybar_command waybar
-
-    # colors {
-    #     background #000000
-    #     statusline #FFFFFF
-    #     separator  #404040
-    #
-    #     # target           border    bg        text
-    #     inactive_workspace #32323200 #32323200 #5c5c5c
-    #     focused_workspace  #000000   $accent   #FFFFFF
-    #     active_workspace   #000000   #808080   #FFFFFF
-    #     inactive_workspace #000000   #000000   #FFFFFF
-    #     urgent_workspace   #2f343a   #900000   #ffffff
-    # }
 }

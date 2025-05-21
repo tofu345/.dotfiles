@@ -10,6 +10,9 @@ size = 15.9
 opacity = 1
 # blur = true
 
+[colors]
+selection = { background = "#ffffff" }
+
 [cursor]
 style = { blinking = "Off" }
 vi_mode_style = { shape = "Block", blinking = "Off" }
@@ -20,4 +23,11 @@ hide_when_typing = true
 [keyboard]
 bindings = [
     { key = "[", mods = "Alt", action = "ToggleViMode" },
+    { key = "f", mode = "Vi", action = "InlineSearchForward" },
+    { key = "t", mode = "Vi", action = "InlineSearchBackward" },
+    { key = "0", mods = "Shift", mode = "Vi", action = "First" },
+    { key = "$", mode = "Vi", action = "Last" },
+    { key = "b", mode = "Vi", action = "WordLeft" },
+    { key = "w", mode = "Vi", action = "WordRight" },
+    { key = "e", mode = "Vi", action = "WordRightEnd" },
 ]

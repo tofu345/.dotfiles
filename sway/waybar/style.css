@@ -1,68 +1,61 @@
-/* lots of inspiration from https://github.com/OriginCode/dotfiles and https://github.com/lgaboury/Sway-Waybar-Install-Script and https://github.com/lingllqs/dotfiles */
+/* 
+ * lots of inspiration from:
+ * https://github.com/OriginCode/dotfiles 
+ * https://github.com/lgaboury/Sway-Waybar-Install-Script 
+ * https://github.com/lingllqs/dotfiles 
+ */
 
-@define-color accent rgba(0, 0, 0, 1);
+@define-color accent rgba(0, 0, 0, 0.55);
 @define-color border transparent;
 @define-color color  white;
 
-@define-color err    #802000;
+/* @define-color err    #802000; */
 @define-color warn   #785e3a;
-@define-color bg     rgba(0, 0, 0, 0.7);
-
-* {
-    border: none;
-    border-radius: 3px;
-    font-family: "CaskaydiaMono Nerd Font";
-    font-size: 12px;
-    min-height: 0;
-}
 
 window#waybar {
     background-color: transparent;
 }
 
-#window {
-    padding: 5px;
+* {
+    transition: none;
+    border: none;
+    border-radius: 5px;
+    font-family: "CaskaydiaMono Nerd Font";
+    font-size: 12px;
+    min-height: 0;
 }
 
-window#waybar.hidden #window {
-    opacity: 0;
+tooltip {
+    background-color: black;
 }
 
-#mode {
-    color: red;
+tooltip label {
+    color: white;
+    text-shadow: none;
 }
-
-/* window#waybar.tiled { */
-/*     opacity: 0; */
-/*     background: blue; */
-/* } */
 
 #workspaces {
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
+    padding: 0 3px;
+    background-color: @accent;
+    border: none;
 }
 
 #workspaces button {
-    margin: 0;
-    padding: 0 3px;
+    border-radius: 0;
+    padding: 0px 2px;
     font-weight: 100;
     transition: font-weight 0.05s ease-in;
-    transition-delay: 150ms;
+    transition-delay: 50ms;
 }
 
 #workspaces button.focused {
-    font-weight: 900;
     color: white;
+    font-weight: 900;
 }
 
-/* #workspaces button.empty { */
-/*     padding-left: 15px; */
-/*     padding-right: 15px; */
-/* } */
-
 #workspaces button.urgent {
-    background-color: @err;
+    color: red;
+    font-weight: 900;
 }
 
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
@@ -72,81 +65,47 @@ window#waybar.hidden #window {
     text-shadow: inherit;
     border-radius: inherit;
     color: inherit;
-    background: @accent;
-    background-color: @accent;
+    background: transparent;
+    background-color: transparent;
 }
 
-#clock {
+#wireplumber.muted {
+}
+
+#cpu,
+#load,
+#memory,
+#mode,
+#wireplumber,
+#clock,
+#tray,
+#battery,
+#scratchpad,
+#mpris {
     padding: 0px 7px 0px 7px;
     background-color: @accent;
-    transition: none;
 }
-
-#wireplumber {
-    transition: none;
-    padding: 0px 7px 0px 7px;
-    background-color: @accent;
-}
-
-#wireplumber.muted {}
 
 #mpris {
-    transition: none;
-    padding: 0px 7px 0px 7px;
     background-color: #804a00;
-    color: white;
 }
-
-#cpu {
-    transition: none;
-    padding: 0px 7px 0px 7px;
-    background-color: @accent;
-}
-
-
-#load {
-    transition: none;
-    padding: 0px 7px 0px 7px;
-    background-color: @accent;
-}
-
-#memory {
-    transition: none;
-    padding: 0px 7px 0px 7px;
-    background-color: @accent;
-}
-
-/* #temperature.critical {
-    background-color: #eb4d4b;
-} */
 
 #battery {
     padding: 0px 13px 0px 5px;
-    background-color: @accent;
 }
 
-/* #battery.warning:not(.charging) { */
-/*     background-color: @warn */
-/* } */
+#load.warning,
+#memory.warning {
+    color: #ffa500;
+}
 
+#load.critical,
+#memory.critical,
 #battery.critical:not(.charging) {
     color: #ff4000;
-    /* animation-name: blink; */
-    /* animation-duration: 0.5s; */
-    /* animation-timing-function: steps(12); */
-    /* animation-iteration-count: infinite; */
-    /* animation-direction: alternate; */
 }
 
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: black;
-    }
-}
-
-#tray {
-    transition: none;
-    padding: 0px 7px 0px 7px;
-    border: none;
+#mode {
+    background-color: #e63900;
+    color: black;
 }
