@@ -7,7 +7,7 @@ size = 15.9
 
 [window]
 # decorations = "None"
-opacity = 1
+opacity = 0.95
 # blur = true
 
 [colors]
@@ -23,11 +23,11 @@ hide_when_typing = true
 [keyboard]
 bindings = [
     { key = "[", mods = "Alt", action = "ToggleViMode" },
-    { key = "f", mode = "Vi", action = "InlineSearchForward" },
-    { key = "t", mode = "Vi", action = "InlineSearchBackward" },
-    { key = "0", mods = "Shift", mode = "Vi", action = "First" },
-    { key = "$", mode = "Vi", action = "Last" },
-    { key = "b", mode = "Vi", action = "WordLeft" },
-    { key = "w", mode = "Vi", action = "WordRight" },
-    { key = "e", mode = "Vi", action = "WordRightEnd" },
+    { key = "f", mode = "Vi|~Search", action = "InlineSearchForward" },
+    { key = "t", mode = "Vi|~Search", action = "InlineSearchBackward" },
+    { key = "0", mods = "Shift", mode = "Vi|~Search", action = "First" },
+    { key = "$", mode = "Vi|~Search", action = "Last" },
+    { key = "b", mode = "Vi|~Search", action = "WordLeft" },
+    { key = "w", mode = "Vi|~Search", action = "WordRight" },
+    { key = "e", mode = "Vi|~Search", action = "WordRightEnd" },
 ]

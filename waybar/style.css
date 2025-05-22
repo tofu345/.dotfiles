@@ -1,16 +1,11 @@
-/* 
- * lots of inspiration from:
- * https://github.com/OriginCode/dotfiles 
- * https://github.com/lgaboury/Sway-Waybar-Install-Script 
- * https://github.com/lingllqs/dotfiles 
- */
+/* Refresh waybar css: killall -SIGUSR2 waybar */
 
-@define-color accent rgba(0, 0, 0, 0.55);
+@define-color bg rgba(0, 0, 0, 0.6);
 @define-color border transparent;
 @define-color color  white;
 
-/* @define-color err    #802000; */
-@define-color warn   #785e3a;
+/* @define-color err    #802000;
+@define-color warn   #785e3a; */
 
 window#waybar {
     background-color: transparent;
@@ -36,7 +31,7 @@ tooltip label {
 
 #workspaces {
     padding: 0 3px;
-    background-color: @accent;
+    background-color: @bg;
     border: none;
 }
 
@@ -72,22 +67,34 @@ tooltip label {
 #wireplumber.muted {
 }
 
+#battery,
+#clock,
 #cpu,
+#custom-weather,
+#custom-powermode,
 #load,
 #memory,
 #mode,
-#wireplumber,
-#clock,
-#tray,
-#battery,
+#mpris,
+#network,
 #scratchpad,
-#mpris {
+#tray,
+#wireplumber {
     padding: 0px 7px 0px 7px;
-    background-color: @accent;
+    background-color: @bg;
+}
+
+#custom-powermode {
+    padding-right: 10px;
+    font-size: 10px;
+}
+
+#network {
+    color: #33cc33;
 }
 
 #mpris {
-    background-color: #804a00;
+    background-color: rgba(128, 74, 0, 0.6);
 }
 
 #battery {
@@ -95,17 +102,18 @@ tooltip label {
 }
 
 #load.warning,
-#memory.warning {
+#memory.warning,
+#network.disconnected {
     color: #ffa500;
 }
 
+#battery.critical:not(.charging),
 #load.critical,
-#memory.critical,
-#battery.critical:not(.charging) {
+#memory.critical {
     color: #ff4000;
 }
 
 #mode {
-    background-color: #e63900;
-    color: black;
+    color: #e63900;
+    font-weight: 900;
 }
