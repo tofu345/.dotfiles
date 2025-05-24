@@ -1,0 +1,291 @@
+/* From: https://github.com/iyiolacak/-iyiolacak-s-swaync-config */
+
+@define-color bg rgba(0, 0, 0, 0.8);
+@define-color fg white;
+@define-color fg_secondary rgba(215, 220, 225, 0.78);
+@define-color red rgba(128, 32, 0, 0.8);
+@define-color red2 rgb(128, 32, 0);
+
+* {
+    /* font-family: "Inter", "SF Pro Text", sans-serif; */
+    font-family: "CaskaydiaMono Nerd Font";
+    font-size: 14px;
+    color: @theme_fg;
+    border: none;
+    border-radius: 0;
+    background: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    text-shadow: none;
+    outline: none;
+}
+
+/* 
+.widget-mpris,
+.control-center-list > box > *:not(.widget-title) {
+    background-color: @module_bg;
+    border-radius: 18px;
+    border: none;
+}
+
+.widget-mpris {
+    padding: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: @bg;
+}
+
+.widget-mpris .widget-mpris-player {
+    background-color: transparent;
+    border: none;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.widget-mpris .widget-mpris-album-art {
+    background: none;
+    border-radius: 16px;
+    margin-right: 12px;
+}
+
+.widget-mpris .widget-mpris-title {
+    font-size: 12px;
+    background: none;
+}
+
+.widget-mpris .widget-mpris-subtitle {
+    font-size: 10px;
+    color: @fg_secondary;
+    background: none;
+}
+
+.widget-mpris button.image-button widget {
+    opacity: 1;
+}
+
+.widget-mpris .widget-mpris-player button {
+    all: unset;
+    background: transparent;
+    border-radius: 5px;
+    color: @icon_secondary;
+    font-size: 12px;
+    min-width: 14px;
+    min-height: 14px;
+    margin-top: 5px;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.widget-mpris .widget-mpris-player button:hover {
+    background-color: @button_hover_bg;
+    color: @icon_primary;
+}
+
+.widget-mpris .widget-mpris-player button:disabled {
+    color: alpha(@icon_secondary, 0.3);
+} */
+
+/* Notification Center */
+
+.control-center {
+    background-color: transparent;
+    border: none;
+    border-top-color: @border_light;
+    border-bottom-color: @border_dark;
+    border-radius: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+.control-center > box > *:last-child {
+    margin-bottom: 0;
+}
+
+.control-center > scrolledwindow > viewport {
+    background-color: @bg;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.control-center .widget-title {
+    background: @bg;
+    padding: 5px 10px;
+    border: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.control-center .widget-title > label {
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    color: inherit;
+    background: none;
+}
+
+button.control-center-clear-all {
+    color: @fg_secondary;
+    background-color: transparent;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.15s ease;
+}
+
+button.control-center-clear-all > label {
+    color: inherit;
+    font-family: inherit;
+    font-size: 12px;
+    background-color: transparent;
+    border: none;
+    border-radius: 10px;
+    transition: color 0.15s ease;
+}
+
+button.control-center-clear-all:hover,
+button.control-center-clear-all:active {
+    color: @fg;
+}
+
+/* DND */
+/* .widget-dnd > label {
+    font-size: 10px;
+}
+
+.widget-dnd {
+    padding: 0px 10px;
+    background-color: @bg;
+}
+
+.widget-dnd > switch {
+    padding: 3px;
+    font-size: inherit;
+    border-radius: 5px;
+    background: @bg;
+    border: none;
+    box-shadow: none;
+}
+
+.widget-dnd > switch:checked {
+}
+
+.widget-dnd > switch slider {
+    background: @fg_secondary;
+    border-radius: 5px;
+} */
+
+/* Notification Row */
+
+.control-center-list {
+    background-color: @bg;
+}
+
+.control-center-list-placeholder > label {
+    font-size: 12px;
+}
+
+.control-center-list-placeholder > image {
+}
+
+.control-center .notification-row {
+}
+
+.control-center .notification-background,
+.floating-notifications .notification-background {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.15s ease;
+}
+
+.control-center .notification-row:hover .notification-background {
+    background-color: rgba(20, 20, 20, 0.6);
+}
+
+.control-center .notification .summary,
+.floating-notifications .notification .summary {
+    font-size: 12px;
+    font-weight: 600;
+    color: @fg;
+}
+
+.control-center .notification .body,
+.floating-notifications .notification .body {
+    font-size: 12px;
+    color: @fg_secondary;
+}
+
+.control-center .notification .time,
+.floating-notifications .notification .time {
+    font-size: 12px;
+    font-weight: 300;
+    color: @fg_secondary;
+}
+
+.control-center .close-button,
+.floating-notifications .close-button {
+    border-radius: 5px;
+    padding: 1px;
+    background-color: @red;
+}
+
+.control-center .close-button:hover,
+.floating-notifications .close-button:hover {
+    background-color: @red2;
+}
+
+.control-center .close-button image,
+.floating-notifications .close-button image {
+    margin-left: 0.5px; /* Adjust this value for desired spacing */
+    color: black;
+}
+
+.control-center .notification image,
+.floating-notifications .notification image {
+    margin-right: 5px;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: 8px;
+}
+
+/* Floating Notifications */
+
+.floating-notifications .notification-row {
+    padding: 3px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0px;
+}
+
+.floating-notifications .notification-background {
+    background-color: @bg;
+}
+
+.floating-notifications .notification-alt-actions {
+    /* margin-top: 16px; */
+    /* padding-top: 16px; */
+    border: none
+}
+
+button.notification-action,
+.notification-alt-actions button {
+    border-radius: 5px;
+    padding: 3px;
+    margin: 0px;
+    font-size: 10px;
+    color: @fg;
+    background-color: transparent;
+    transition: background-color 0.15s ease;
+}
+
+.notification-action label {
+    margin-top: 5px;
+    font-size: 10px;
+}
+
+button.notification-action:hover
+.notification-alt-actions button:hover {
+    background-color: @button_hover_bg;
+}

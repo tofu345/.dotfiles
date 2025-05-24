@@ -3,7 +3,7 @@ background = "#000000"
 
 [font]
 normal = { family = "CaskaydiaMono Nerd Font Mono", style = "Regular" }
-size = 15.9
+size = 15.5
 
 [window]
 # decorations = "None"

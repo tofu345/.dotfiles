@@ -8,9 +8,9 @@
 {
     "layer": "top",
     "position": "top",
-    "spacing": 5,
-    "margin": "5 5 5 5",
-    "height": 20,
+    "spacing": 4,
+    "margin": "3 3 3 3",
+    "height": 23,
     "ipc": true,
 
     // * Modules
@@ -22,19 +22,20 @@
         "sway/mode"
     ],
     "modules-center": [
-        "clock",
-        "custom/weather"
     ],
     "modules-right": [
-        "tray",
         "mpris",
+        "tray",
         "wireplumber",
         "cpu",
         "load",
         "memory",
         "network",
         "battery",
-        "custom/powermode"
+        // "custom/powermode"
+        "clock",
+        "custom/notification"
+        // "custom/weather"
     ],
 
     // * Configuration
@@ -59,12 +60,14 @@
         "scroll-step": 5, // %, can be a float
         "format": "{icon} {volume}%",
         "format-muted": "<span color='gray'>{icon} {volume}%</span>",
+        // "format-muted": "󰝟 {volume}%",
         "format-icons": ["", "", ""],
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
         "on-click-right": "pavucontrol"
     },
 
     "mpris": {
+        "max-length": 30,
         "format-playing": "♪ {dynamic}",
         "format": "{dynamic}",
         "interval": 1,
@@ -126,8 +129,8 @@
     },
 
     "clock": {
-        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "on-click": "swaymsg exec gnome-calendar",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        // "on-click": "swaymsg exec gnome-calendar",
         "format": "{:%a %d %b %g %H:%M}"
     },
     
@@ -140,19 +143,42 @@
     },
 
     "network": {
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
         "format": "{ifname}",
-        "format-wifi": "  {essid}",
+        "format-wifi": "{icon} {essid}",
         "format-ethernet": "{ifname} ",
-        "tooltip-format": "{bandwidthDownBytes} {bandwidthUpBytes}",
-        "format-disconnected": "  Disconnected", // 
+        "tooltip-format": "{bandwidthDownBytes} {bandwidthUpBytes} {signalStrength}%",
+        "format-disconnected": "󰀝 Disconnected",
         "on-click": "swaymsg exec -- alacritty -e nmtui"
     },
 
-    // TODO
-    "custom/powermode": {
-        "format": "",
-        "exec": "echo ; echo ",
-        "interval": "once", // once every day
-        "tooltip": false
+    // "custom/powermode": {
+    //     "format": "{}",
+    //     "exec": "$HOME/.dotfiles/waybar/scripts/powermode_indicator.sh",
+    //     "exec-on-event": true,
+    //     "on-click": "$HOME/.dotfiles/bin/powermode next",
+    //     "interval": "once",
+    //     "tooltip": false
+    // }
+
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     }
 }

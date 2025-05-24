@@ -9,7 +9,7 @@ main = do
     args <- getArgs
     case args of
         [mode] | mode `elem` modes -> changeTo mode
-        _ -> putStrLn "Err: "
+        _ -> putStrLn "Err: invalid argument"
 
 changeTo mode = do
     let baseDir = "/sys/devices/system/cpu/"
@@ -17,4 +17,5 @@ changeTo mode = do
     contents <- listDirectory baseDir
     forM_ (path <$> filter cpus contents) $ \f -> writeFile f mode
     where
-    cpus el = length el > 3 && isDigit (el !! 3)
+    cpus (_:_:_:el:_) = isDigit el
+    cpus _ = False

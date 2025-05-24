@@ -64,14 +64,12 @@ tooltip label {
     background-color: transparent;
 }
 
-#wireplumber.muted {
-}
-
 #battery,
 #clock,
 #cpu,
 #custom-weather,
 #custom-powermode,
+#custom-notification,
 #load,
 #memory,
 #mode,
@@ -84,9 +82,17 @@ tooltip label {
     background-color: @bg;
 }
 
+#custom-notification {
+    padding-right: 11px;
+}
+
+#custom-notification.dnd-none {
+    padding-right: 14px;
+}
+
 #custom-powermode {
     padding-right: 10px;
-    font-size: 10px;
+    font-size: 11px;
 }
 
 #network {
@@ -101,6 +107,14 @@ tooltip label {
     padding: 0px 13px 0px 5px;
 }
 
+#mode {
+    color: #e63900;
+    font-weight: 900;
+}
+
+#wireplumber.muted {
+}
+
 #load.warning,
 #memory.warning,
 #network.disconnected {
@@ -111,9 +125,4 @@ tooltip label {
 #load.critical,
 #memory.critical {
     color: #ff4000;
-}
-
-#mode {
-    color: #e63900;
-    font-weight: 900;
 }
