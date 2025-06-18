@@ -1,6 +1,6 @@
 /* Refresh waybar css: killall -SIGUSR2 waybar */
 
-@define-color bg rgba(0, 0, 0, 0.6);
+@define-color bg rgba(0, 0, 0, 0.7);
 @define-color border transparent;
 @define-color color  white;
 
@@ -9,6 +9,7 @@
 
 window#waybar {
     background-color: transparent;
+    color: white;
 }
 
 * {
@@ -21,10 +22,14 @@ window#waybar {
 }
 
 tooltip {
-    background-color: black;
+    background-color: @bg;
+    border-radius: 5px;
+    border: 0.2px solid gray;
+    padding: 0;
 }
 
 tooltip label {
+    padding: 0;
     color: white;
     text-shadow: none;
 }
@@ -36,11 +41,12 @@ tooltip label {
 }
 
 #workspaces button {
+    color: #a6a6a6;
     border-radius: 0;
     padding: 0px 2px;
-    font-weight: 100;
-    transition: font-weight 0.05s ease-in;
-    transition-delay: 50ms;
+    font-weight: 300;
+    /* transition: font-weight 0.05s ease-in; */
+    /* transition-delay: 50ms; */
 }
 
 #workspaces button.focused {
@@ -67,15 +73,16 @@ tooltip label {
 #battery,
 #clock,
 #cpu,
-#custom-weather,
-#custom-powermode,
 #custom-notification,
+#custom-powermode,
+#custom-weather,
 #load,
 #memory,
 #mode,
 #mpris,
 #network,
 #scratchpad,
+#temperature,
 #tray,
 #wireplumber {
     padding: 0px 7px 0px 7px;
@@ -122,6 +129,7 @@ tooltip label {
 }
 
 #battery.critical:not(.charging),
+#temperature.critical,
 #load.critical,
 #memory.critical {
     color: #ff4000;

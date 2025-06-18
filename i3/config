@@ -15,41 +15,29 @@ focus_follows_mouse no
 hide_edge_borders smart_no_gaps
 floating_modifier $mod
 tiling_drag modifier titlebar
-workspace_layout stacking
+workspace_layout tabbed
 # floating_minimum_size 500 x 300
-
-for_window [class="Caja"] floating enable
-for_window [class="Caja"] resize set 1200 700
-
-for_window [class="org.gnome.Nautilus"] floating enable
-for_window [class="org.gnome.Nautilus"] resize set 1000 700
-for_window [class="org.gnome.Nautilus"] move [absolute] position center
-
-# for_window [class="Evince"] floating enable
-for_window [class="Eog"] floating enable
-for_window [class="org.gnome.DejaDup"] floating enable
-for_window [title="WhatsApp Web"] floating enable
-for_window [class="zoom"] floating enable
 
 # >-- Execs --<
 
-exec_always setxkbmap -layout real-prog-dvorak
+# Surely a better way
+exec_always setxkbmap -layout real-prog-dvorak -option "ctrl:ralt_rctrl,altwin:swap_lalt_lwin"
 
 # Night light
 exec gammastep -O 3000
 
-# exec --no-startup-id nitrogen --restore
+exec_always --no-startup-id nitrogen --restore
 
 # Load GTK Settings, dark style
 exec --no-startup-id /usr/libexec/gsd-xsettings
 exec --no-startup-id gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 # don't turn off screen
-exec_always --no-startup-id xset s off s noblank -dpms
+exec --no-startup-id xset s off s noblank -dpms
 
 # Picom
 # '--transparent-clipping' for https://github.com/yshui/picom/issues/265, breaks menu shadows or whatever though
-exec_always --no-startup-id picom -b --config /home/tofs/.dotfiles/i3/picom.conf
+exec --no-startup-id picom -b --config /home/tofs/.dotfiles/i3/picom.conf
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -81,7 +69,7 @@ bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
 
-bindsym $mod+Shift+s sticky toggle
+# bindsym $mod+Shift+s sticky toggle
 bindsym $mod+f fullscreen toggle
 
 # change focus between tiling / floating windows
@@ -101,8 +89,8 @@ bindsym $mod+Ctrl+o layout stacked
 bindsym $mod+Shift+o layout tabbed
 
 # new window position
-bindsym $mod+Shift+n split v
-bindsym $mod+n split h
+bindsym $mod+Shift+s split v
+bindsym $mod+s split h
 
 # Marks
 bindsym $mod+m exec i3-input -F 'mark %s' -l 1 -P 'Mark: '
@@ -115,16 +103,18 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 # Clipboard
-bindsym $mod+v exec --no-startup-id CM_LAUNCHER=rofi ~/.local/bin/clipmenu
+# bindsym $mod+v exec --no-startup-id CM_LAUNCHER=rofi ~/.local/bin/clipmenu
 bindsym $mod+Shift+v exec --no-startup-id ~/.local/bin/clipdel -d ".*"
+bindsym $mod+v exec vivaldi --password-store=gnome-libsecret
 
 # launcher
 bindsym $mod+d exec "rofi -modi drun,run -show drun"
 
 # File explorer
-bindsym $mod+e exec --no-startup-id caja --no-desktop
+bindsym $mod+e exec --no-startup-id nautilus
 
 bindsym $mod+t exec alacritty
+bindsym $mod+Shift+t exec gnome-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -194,20 +184,15 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that for floating windows)
 mode "resize" {
-        bindsym Ctrl+$right resize grow width 100 px or 100 ppt
-        bindsym Ctrl+$left resize shrink width 100 px or 100 ppt
-        bindsym Ctrl+$up resize grow height 100 px or 100 ppt
-        bindsym Ctrl+$down resize shrink height 100 px or 100 ppt
+        bindsym $left resize shrink width 10 px
+        bindsym $down resize grow height 10 px
+        bindsym $up resize shrink height 10 px
+        bindsym $right resize grow width 10 px
 
-        bindsym $right resize grow width 15 px or 15 ppt
-        bindsym $left resize shrink width 15 px or 15 ppt
-        bindsym $up resize grow height 15 px or 15 ppt
-        bindsym $down resize shrink height 15 px or 15 ppt
-
-        bindsym Shift+$right resize grow width 5 px or 5 ppt
-        bindsym Shift+$left resize shrink width 5 px or 5 ppt
-        bindsym Shift+$up resize grow height 5 px or 5 ppt
-        bindsym Shift+$down resize shrink height 5 px or 5 ppt
+        bindsym Ctrl+$left resize shrink width 100 px
+        bindsym Ctrl+$down resize shrink height 100 px
+        bindsym Ctrl+$up resize grow height 100 px
+        bindsym Ctrl+$right resize grow width 100 px
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -227,14 +212,14 @@ bindsym $mod+r mode "resize"
 # solarized brown - #504945
 # rosy brown - #543232CC
 
-set $accent #543232CC
-set $black  #000000FF
+# set $accent #543232
+set $black  #000000
 set $white  #ffffff
 set $gray   #808080
 set $red    #900000
 
 # class                 border  backgr. text    indictr child_border
-client.focused          $accent $accent $white  $black  $accent
+client.focused          $black  $black  $white  $black  $black
 client.focused_inactive $black  $black  #bfbfbf $black  $black
 client.unfocused        $black  $black  $gray   $black  $black
 client.urgent           $red    $red    $white  $red    $red
@@ -248,9 +233,9 @@ bar {
                 separator #404040
 
                 # class            border  backgr. text
-                focused_workspace  $accent $accent #ffffff
-                active_workspace   $accent $accent #808080
+                focused_workspace  $black  $black  $white
+                active_workspace   $black  $black  #808080
                 inactive_workspace $black  $black  #888888
-                urgent_workspace   #2f343a $red    #ffffff
+                urgent_workspace   $black  $black  $white
         }
 }

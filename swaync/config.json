@@ -15,7 +15,7 @@
 
     "notification-2fa-action": true,
     "notification-inline-replies": false,
-    "notification-window-width": 380,
+    "notification-window-width": 400,
     "notification-icon-size": 48,
     "notification-body-image-height": 180,
     "notification-body-image-width": 180,
